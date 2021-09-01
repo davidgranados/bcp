@@ -62,4 +62,13 @@ export class AddComponent implements OnInit {
         );
     }
   }
+  delete(): void {
+    if (this.hero.id) {
+      this.heroesService
+        .delete(this.hero.id)
+        .subscribe(() =>
+          this.router.navigate(['/heroes/list'])
+        );
+    }
+  }
 }

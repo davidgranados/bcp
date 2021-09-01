@@ -37,10 +37,24 @@
 
     <br />
 
-    <button mat-raised-button color="primary" (click)="save()">
-      <mat-icon>edit</mat-icon>
-      Save
-    </button>
+    <div fxLayout>
+      <button mat-raised-button color="primary" (click)="save()">
+        <mat-icon *ngIf="hero.id">edit</mat-icon>
+        Save
+      </button>
+
+      <span class="spacer"></span>
+
+      <button
+        *ngIf="hero.id"
+        mat-raised-button
+        (click)="delete()"
+        color="warn"
+      >
+        <mat-icon>remove</mat-icon>
+        Borrar
+      </button>
+    </div>
   </div>
   <div fxFlex="50">
     <img [src]="hero | image" alt="" />
