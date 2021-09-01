@@ -1,0 +1,7 @@
+### GET agencies
+GET http://localhost:3000/agencies
+
+
+### GET agency
+GET http://localhost:3000/agencies/Real-Plaza-Cusco
+Content-Type: application/json

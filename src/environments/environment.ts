@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  heroesEndpoint: 'http://localhost:3000'
+  agenciesEndpoint: 'http://localhost:3000'
 };
 
 /*

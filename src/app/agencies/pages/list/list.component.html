@@ -1,0 +1,23 @@
+<h1>Agencias</h1>
+<mat-divider></mat-divider>
+<br />
+
+<mat-grid-list cols="1" *ngIf="!agencies.length; else agenciesContainer">
+  <mat-grid-tile>
+    <mat-spinner></mat-spinner>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<ng-template #agenciesContainer>
+  <div fxLayout="column">
+    <div
+      fxFlex="20"
+      fxFlex.lg="15"
+      fxFlex.sm="30"
+      *ngFor="let agency of agencies"
+    >
+      <app-agency-card [agency]="agency"></app-agency-card>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</ng-template>

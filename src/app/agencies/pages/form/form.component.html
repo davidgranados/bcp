@@ -1,0 +1,52 @@
+<h1>
+  <span>Detalle de Agencia</span>
+</h1>
+
+<div fxLayout="column" fxLayoutGap="40px" fxLayout.xs="column">
+  <div fxLayout="column">
+    <mat-form-field fxFlex="50">
+      <mat-label>Nombre de la agencia</mat-label>
+      <input type="text" matInput required [(ngModel)]="agency.agencia" />
+    </mat-form-field>
+    <mat-form-field fxFlex="50">
+      <mat-label>Direccion</mat-label>
+      <input type="text" matInput [(ngModel)]="agency.direccion" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Distrito</mat-label>
+      <input type="text" matInput [(ngModel)]="agency.distrito" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Latitud</mat-label>
+      <input type="text" matInput [(ngModel)]="agency.lat" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Longitud</mat-label>
+      <input type="url" matInput [(ngModel)]="agency.lon" />
+    </mat-form-field>
+
+    <br />
+
+    <div fxLayout>
+      <button mat-raised-button color="primary" (click)="save()">
+        <mat-icon *ngIf="agency.id">edit</mat-icon>
+        Actualizar
+      </button>
+
+      <span class="spacer"></span>
+
+      <button
+        *ngIf="agency.id"
+        mat-raised-button
+        (click)="delete()"
+        color="warn"
+      >
+        <mat-icon>remove</mat-icon>
+        Borrar
+      </button>
+    </div>
+  </div>
+  <div fxFlex="50">
+    <img [src]="agency.image" alt="" />
+  </div>
+</div>

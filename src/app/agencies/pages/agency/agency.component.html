@@ -1,0 +1,9 @@
+<mat-grid-list cols="1" *ngIf="!agency; else agencyContainer">
+  <mat-grid-tile>
+    <mat-spinner></mat-spinner>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<ng-template #agencyContainer>
+  <app-agency-card [agency]="agency"></app-agency-card>
+</ng-template>

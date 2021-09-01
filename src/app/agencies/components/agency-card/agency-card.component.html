@@ -1,0 +1,22 @@
+<div *ngIf="agency">
+  <div fxLayout="row">
+    <div fxFlex="20">
+      <img
+        mat-card-image
+        [src]="agency.image"
+        [alt]="agency.agencia"
+      />
+    </div>
+    <div fxFlex="80">
+      <h3>{{ agency.agencia }}</h3>
+      <p>
+        <strong>{{ agency.departamento }}</strong>
+        <br />
+        <small>{{ agency.direccion }}</small>
+      </p>
+    </div>
+    <div>
+      <button mat-button [routerLink]="['/edit', agency.id]">Editar</button>
+    </div>
+  </div>
+</div>

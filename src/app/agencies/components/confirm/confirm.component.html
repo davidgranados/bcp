@@ -1,0 +1,10 @@
+<p>
+  Estas a punto de borrar {{ data.agencia }}
+  <br />
+  Continuar?
+</p>
+
+<div>
+  <button mat-button (click)="delete()" color="warn">Si, borrar</button>
+  <button mat-button (click)="close()" color="warn">No, cancelar</button>
+</div>
