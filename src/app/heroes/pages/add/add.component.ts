@@ -3,6 +3,7 @@ import { Hero, Publisher } from '../../interfaces/heroes.interface';
 import { HeroesService } from '../../services/heroes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add',
@@ -27,7 +28,8 @@ export class AddComponent implements OnInit {
   constructor(
     private heroesService: HeroesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.hero = this.getCleanHero();
     if (this.router.url.includes('add')) {
@@ -36,6 +38,14 @@ export class AddComponent implements OnInit {
     this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.heroesService.getById(id)))
       .subscribe((hero) => (this.hero = hero));
+  }
+
+  ngOnInit(): void {}
+
+  showSnackBar(message: string): void {
+    this._snackBar.open(message, 'X', {
+      duration: 5000,
+    });
   }
 
   getCleanHero(): Hero {
@@ -49,26 +59,25 @@ export class AddComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
-
   save(): void {
     if (this.hero.id) {
-      this.heroesService.update(this.hero).subscribe((res) => console.log(res));
+      this.heroesService.update(this.hero).subscribe((res) => this.showSnackBar('Hero Updated!'));
     } else {
       this.heroesService
         .create(this.hero)
-        .subscribe((hero) =>
-          this.router.navigate(['/heroes', hero.id, '/edit'])
+        .subscribe((hero) => {
+            this.router.navigate(['/heroes', hero.id, 'edit']);
+            this.showSnackBar('Hero Created!');
+        }
         );
     }
   }
+
   delete(): void {
     if (this.hero.id) {
-      this.heroesService
-        .delete(this.hero.id)
-        .subscribe(() =>
-          this.router.navigate(['/heroes/list'])
-        );
+      this.heroesService.delete(this.hero.id).subscribe(() => {
+        this.router.navigate(['/heroes/list']);
+      });
     }
   }
 }
