@@ -1,40 +1,299 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-import { environment } from '../../../environments/environment';
-
-import { Agency } from '../interfaces/agency.interface';
+import {Injectable} from '@angular/core';
+import {Agency} from '../interfaces/agency.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AgenciesService {
-  private _baseUrl: string = environment.agenciesEndpoint;
+  agencies: Agency[];
 
-  constructor(private http: HttpClient) {}
-
-  get baseUrl() {
-    return this._baseUrl;
+  constructor() {
+    this.agencies = [];
   }
 
-  getAgencies(): Observable<Agency[]> {
-    return this.http.get<Agency[]>(`${this.baseUrl}/agencies`);
+  getAgencies() {
+    const localStorageAgencies = localStorage.getItem('agencies');
+    if (localStorageAgencies) {
+      this.agencies = JSON.parse(localStorage.getItem('agencies') as string);
+    } else {
+      this.agencies = [
+        {
+          id: 'Las-Flores',
+          agencia: 'Las Flores2',
+          distrito: 'San Juan De Lurigancho2',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Las Flores de Primavera 14872',
+          lat: -77.012328172,
+          lon: -12.00468962,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Punchana',
+          agencia: 'Punchana',
+          distrito: 'Punchana',
+          provincia: 'Maynas',
+          departamento: 'Loreto',
+          direccion: 'Av. La Marina N° 944',
+          lat: -73.240647,
+          lon: -3.731367,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Conquistadores',
+          agencia: 'Conquistadores',
+          distrito: 'San Isidro',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. Conquistadores 968',
+          lat: -77.03735314,
+          lon: -12.10568371,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Salvador-Allende',
+          agencia: 'Salvador Allende',
+          distrito: 'Villa Maria del Triunfo',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. Salvador Allende 468 – Villa María del Triunfo',
+          lat: -76.957646,
+          lon: -12.158153,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Siglo-XX-(030)',
+          agencia: 'Siglo XX (030)',
+          distrito: 'Arequipa',
+          provincia: 'Arequipa',
+          departamento: 'Arequipa',
+          direccion: 'Av. Siglo XX N°122 Cercado de Arequipa',
+          lat: -71.530671,
+          lon: -16.399615,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Constructores',
+          agencia: 'Constructores',
+          distrito: 'La Molina',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av Constructores Cuadra 1 Mz. D Lote 5',
+          lat: -76.957802,
+          lon: -12.067233,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Victor-Larco',
+          agencia: 'Victor Larco',
+          distrito: 'Trujillo',
+          provincia: 'Trujillo',
+          departamento: 'La Libertad',
+          direccion: 'Av. Víctor Larco Herrera N° 1631 Urbanización Fátima',
+          lat: -79.042123,
+          lon: -8.128624,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Socabaya',
+          agencia: 'Socabaya',
+          distrito: 'Socabaya',
+          provincia: 'Arequipa',
+          departamento: 'Arequipa',
+          direccion: 'Av. San Martín de Socabaya N° 307 Socabaya',
+          lat: -71.529979,
+          lon: -16.438285,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Colonial',
+          agencia: 'Colonial',
+          distrito: 'Callao',
+          provincia: 'Callao',
+          departamento: 'Lima',
+          direccion: 'Av. Oscar Benavides Mz. V Lotes 38 y 39',
+          lat: -77.094569,
+          lon: -12.05266,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Bagua',
+          agencia: 'Bagua',
+          distrito: 'Bagua Chica',
+          provincia: 'Bagua',
+          departamento: 'Amazonas',
+          direccion: 'Jr. Comercio  N°  532 (C-5 Mz 220 Lote 31)',
+          lat: -78.53162,
+          lon: -5.639817,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'El-Porvenir',
+          agencia: 'El Porvenir',
+          distrito: 'El Porvenir',
+          provincia: 'Trujillo',
+          departamento: 'La Libertad',
+          direccion: 'Jr. Micaela Bastidas N° 1201 ',
+          lat: -79.00303884,
+          lon: -8.08513996,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Faber-Castell',
+          agencia: 'Faber Castell',
+          distrito: 'Ate',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. La Molina N. 161',
+          lat: -76.963932,
+          lon: -12.055857,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Real-Plaza-Salaverry',
+          agencia: 'Real Plaza Salaverry',
+          distrito: 'Jesús María',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. Salaverry Cdra. 23 y 24',
+          lat: -77.051717,
+          lon: -12.089713,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Tottus-Sullana',
+          agencia: 'Tottus Sullana',
+          distrito: 'Sullana',
+          provincia: 'Sullana',
+          departamento: 'Piura',
+          direccion: 'Av. Panamericana N°461 Urbanización Santa Rosa',
+          lat: -80.697197,
+          lon: -4.903301,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Open-Plaza Pucallpa',
+          agencia: 'Open Plaza Pucallpa',
+          distrito: 'Calleria',
+          provincia: 'Coronel Portillo',
+          departamento: 'Ucayali',
+          direccion: 'Av. Centenario – Av. Juan Vargas',
+          lat: -74.566592,
+          lon: -8.387681,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Yanahuara',
+          agencia: 'Yanahuara',
+          distrito: 'Yanahuara',
+          provincia: 'Arequipa',
+          departamento: 'Arequipa',
+          direccion: 'Av. Ejército  / Urb. Jardín Mz. A Lt. 03',
+          lat: -71.542328,
+          lon: -16.391764,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'De-la-Fuente',
+          agencia: 'De la Fuente',
+          distrito: 'Miraflores',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. 28 de Julio 1121',
+          lat: -77.02138969,
+          lon: -12.13000805,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Naylamp',
+          agencia: 'Naylamp',
+          distrito: 'San Juan de Lurigancho',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. Gran Chimú 568',
+          lat: -77.00450896,
+          lon: -12.0268364,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Próceres',
+          agencia: 'Próceres',
+          distrito: 'San Juan De Lurigancho',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. Proceres de la Independencia N° 2062 - SJL',
+          lat: -77.009044,
+          lon: -11.998248,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Real-Plaza-Cajamarca',
+          agencia: 'Real Plaza Cajamarca',
+          distrito: 'Cajamarca',
+          provincia: 'Cajamarca',
+          departamento: 'Cajamarca',
+          direccion: ' Av. vía de Evitamiento Norte',
+          lat: -78.506083,
+          lon: -7.154024,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Hersil',
+          agencia: 'Hersil',
+          distrito: 'Ate',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. Los Frutales 220',
+          lat: -76.96720247,
+          lon: -12.05953566,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Owens-Illinois',
+          agencia: 'Owens Illinois',
+          distrito: 'Lurín',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'S/N Pampas De Mamay Lote A-2-3',
+          lat: -76.831697,
+          lon: -12.297813,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Enotria',
+          agencia: 'Enotria',
+          distrito: 'Ate',
+          provincia: 'Lima',
+          departamento: 'Lima',
+          direccion: 'Av. Nicolas Ayllon 2890',
+          lat: -76.972601,
+          lon: -12.058336,
+          image: 'https://via.placeholder.com/150',
+        },
+        {
+          id: 'Real-Plaza-Cusco',
+          agencia: 'Real Plaza Cusco',
+          distrito: 'Cusco',
+          provincia: 'Cusco',
+          departamento: 'Cusco',
+          direccion: 'Av. De la Cultura Lt. A-2',
+          lat: -71.950088,
+          lon: -13.523304,
+          image: 'https://via.placeholder.com/150',
+        },
+      ]
+      localStorage.setItem('agencies', JSON.stringify(this.agencies));
+    }
+    return this.agencies;
   }
 
-  getById(id: string): Observable<Agency> {
-    return this.http.get<Agency>(`${this.baseUrl}/agencies/${id}`);
+  getById(id: string): Agency | undefined {
+    return this.agencies.find((agency) => agency.id === id);
   }
 
-  create(agency: Agency): Observable<Agency> {
-    return this.http.post<Agency>(`${this.baseUrl}/agencies`, agency);
-  }
-
-  update(agency: Agency): Observable<Agency> {
-    return this.http.put<Agency>(`${this.baseUrl}/agencies/${agency.id}`, agency);
-  }
-
-  delete( id: string ): Observable<any> {
-    return this.http.delete<any>(`${ this.baseUrl }/agencies/${ id }`);
+  update(agency: Agency): void {
+    const foundIndex = this.agencies.findIndex(agency => agency.id == agency.id);
+    this.agencies[foundIndex] = agency;
+    localStorage.setItem('agencies', JSON.stringify(this.agencies));
   }
 }

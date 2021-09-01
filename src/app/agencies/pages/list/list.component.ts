@@ -15,9 +15,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.sleep(2000).then(() => {
-      this.agenciesService.getAgencies().subscribe((res) => {
-        this.agencies = res;
-      });
+      this.agencies = this.agenciesService.getAgencies();
     });
   }
 

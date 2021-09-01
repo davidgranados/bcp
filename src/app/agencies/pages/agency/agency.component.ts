@@ -26,9 +26,12 @@ export class AgencyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params
-      .pipe(switchMap(({ id }) => this.agenciesService.getById(id)))
-      .subscribe((agency) => (this.agency = agency));
+    this.activatedRoute.params.subscribe(({ id }) => {
+      const agency = this.agenciesService.getById(id);
+      if (agency) {
+        this.agency = agency;
+      }
+    });
   }
 
   goBack(): void {
