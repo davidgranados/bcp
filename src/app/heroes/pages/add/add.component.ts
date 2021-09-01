@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero, Publisher } from '../../interfaces/heroes.interface';
+import { HeroesService } from '../../services/heroes.service';
 
 @Component({
   selector: 'app-add',
@@ -21,7 +22,14 @@ export class AddComponent implements OnInit {
     publisher: Publisher.MarvelComics,
   };
 
-  constructor() {}
+  constructor(private heroesService: HeroesService) {}
 
   ngOnInit(): void {}
+
+  save(): void {
+    if (this.hero.superhero.trim().length === 0) {
+      return;
+    }
+    this.heroesService.create(this.hero).subscribe((res) => console.log(res));
+  }
 }

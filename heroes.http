@@ -11,3 +11,16 @@ Content-Type: application/json
 ### Filter hero
 GET http://localhost:3000/heroes?q=a&_limit=6
 Content-Type: application/json
+
+
+### Create hero
+POST http://localhost:3000/heroes
+Content-Type: application/json
+
+{
+    "superhero": "David Surfer",
+    "publisher": "Marvel Comics",
+    "alter_ego": "David Radd",
+    "first_appearance": "The Fantastic Four #45",
+    "characters": "David Radd"
+  }
