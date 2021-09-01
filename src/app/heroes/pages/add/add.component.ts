@@ -7,7 +7,14 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styles: [],
+  styles: [
+    `
+      img {
+        width: 100%;
+        border-radius: 10px;
+      }
+    `,
+  ],
 })
 export class AddComponent implements OnInit {
   publishers = [
@@ -23,6 +30,9 @@ export class AddComponent implements OnInit {
     private router: Router
   ) {
     this.hero = this.getCleanHero();
+    if (this.router.url.includes('add')) {
+      return;
+    }
     this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.heroesService.getById(id)))
       .subscribe((hero) => (this.hero = hero));
@@ -47,7 +57,9 @@ export class AddComponent implements OnInit {
     } else {
       this.heroesService
         .create(this.hero)
-        .subscribe((hero) => this.router.navigate(['/heroes', hero.id, '/edit']));
+        .subscribe((hero) =>
+          this.router.navigate(['/heroes', hero.id, '/edit'])
+        );
     }
   }
 }
