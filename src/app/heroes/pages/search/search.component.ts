@@ -12,20 +12,31 @@ import { HeroesService } from '../../services/heroes.service';
 export class SearchComponent implements OnInit {
   query: string = '';
   heroes: Hero[] = [];
-  selectedHero!: Hero;
+  selectedHero: Hero | null = null;
 
   constructor(private heroesService: HeroesService) {}
 
   ngOnInit(): void {}
 
   searching(): void {
-    this.heroesService
-      .getSuggestions(this.query)
-      .subscribe((heroes) => (this.heroes = heroes));
+    const query = this.query.trim();
+    if (query.length) {
+      this.heroesService
+        .getSuggestions(query)
+        .subscribe((heroes) => (this.heroes = heroes));
+    } else {
+      this.heroes = [];
+    }
   }
 
   selectedOption(event: MatAutocompleteSelectedEvent) {
     const hero: Hero = event.option.value;
+
+    if (!hero) {
+      this.selectedHero = null;
+      return;
+    }
+
     this.query = hero.superhero;
 
     if (typeof hero.id === 'string') {

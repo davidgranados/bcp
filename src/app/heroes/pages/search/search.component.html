@@ -3,7 +3,7 @@
     <h1>Hero Finder</h1>
     <mat-divider></mat-divider>
   </div>
-  <div>
+  <div fxLayout="column">
     <h3>Search</h3>
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Number</mat-label>
@@ -24,10 +24,13 @@
         <mat-option *ngFor="let hero of heroes" [value]="hero">
           {{ hero.superhero }}
         </mat-option>
+        <mat-option value="" *ngIf="!heroes.length && query.trim().length">
+          {{ query }} does not exists
+        </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </div>
-  <div>
+  <div *ngIf="selectedHero">
     <pre>
       {{ selectedHero | json }}
     </pre>
