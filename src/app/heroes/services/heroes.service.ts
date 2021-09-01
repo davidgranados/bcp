@@ -8,9 +8,13 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class HeroesService {
-  private baseUrl: string = environment.heroesEndpoint;
+  private _baseUrl: string = environment.heroesEndpoint;
 
   constructor(private http: HttpClient) {}
+
+  get baseUrl() {
+    return this._baseUrl;
+  }
 
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(`${this.baseUrl}/heroes`);
@@ -18,5 +22,11 @@ export class HeroesService {
 
   getById(id: string): Observable<Hero> {
     return this.http.get<Hero>(`${this.baseUrl}/heroes/${id}`);
+  }
+
+  getSuggestions(query: string): Observable<Hero[]> {
+    return this.http.get<Hero[]>(
+      `${this.baseUrl}/heroes?q=${query}&_limit=6`
+    );
   }
 }

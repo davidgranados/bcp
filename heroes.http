@@ -1,0 +1,13 @@
+### Get heroes
+GET http://localhost:3000/heroes
+Content-Type: application/json
+
+
+### Filter hero
+GET http://localhost:3000/heroes?q=super
+Content-Type: application/json
+
+
+### Filter hero
+GET http://localhost:3000/heroes?q=a&_limit=6
+Content-Type: application/json
