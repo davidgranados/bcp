@@ -4,6 +4,8 @@ import { HeroesService } from '../../services/heroes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '../../components/confirm/confirm.component';
 
 @Component({
   selector: 'app-add',
@@ -29,7 +31,8 @@ export class AddComponent implements OnInit {
     private heroesService: HeroesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.hero = this.getCleanHero();
     if (this.router.url.includes('add')) {
@@ -61,23 +64,31 @@ export class AddComponent implements OnInit {
 
   save(): void {
     if (this.hero.id) {
-      this.heroesService.update(this.hero).subscribe((res) => this.showSnackBar('Hero Updated!'));
-    } else {
       this.heroesService
-        .create(this.hero)
-        .subscribe((hero) => {
-            this.router.navigate(['/heroes', hero.id, 'edit']);
-            this.showSnackBar('Hero Created!');
-        }
-        );
+        .update(this.hero)
+        .subscribe(() => this.showSnackBar('Hero Updated!'));
+    } else {
+      this.heroesService.create(this.hero).subscribe((hero) => {
+        this.router.navigate(['/heroes', hero.id, 'edit']);
+        this.showSnackBar('Hero Created!');
+      });
     }
   }
 
   delete(): void {
-    if (this.hero.id) {
-      this.heroesService.delete(this.hero.id).subscribe(() => {
-        this.router.navigate(['/heroes/list']);
-      });
-    }
+    const dialog = this.dialog.open(ConfirmComponent, {
+      width: '250px',
+      data: { ...this.hero },
+    });
+
+    dialog.afterClosed().subscribe((response) => {
+      if (response) {
+        if (this.hero.id) {
+          this.heroesService.delete(this.hero.id).subscribe(() => {
+            this.router.navigate(['/heroes/list']);
+          });
+        }
+      }
+    });
   }
 }
