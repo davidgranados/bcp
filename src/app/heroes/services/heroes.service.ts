@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Hero } from '../interfaces/heroes';
+import { Hero } from '../interfaces/heroes.interface';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
